@@ -1,8 +1,8 @@
 document.getElementById("formLogin").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    let usuario = document.getElementById("usuario").value;
-    let password = document.getElementById("password").value;
+    let usuario = document.getElementById("usuario").value.trim();
+    let password = document.getElementById("password").value.trim();
 
     let datos = new FormData();
     datos.append("usuario", usuario);
@@ -12,12 +12,27 @@ document.getElementById("formLogin").addEventListener("submit", function(e) {
         method: "POST",
         body: datos
     })
-    .then(res => res.text())
-    .then(res => {
-        if (res === "OK") {
-            window.location.href = "dashboard.html";
-        } else {
-            document.getElementById("msg").innerHTML = "Usuario o contraseña incorrectos";
+    .then(res => res.json())
+    .then(data => {
+
+        console.log("RESPUESTA:", data);
+
+        if (data.status === "OK") {
+
+            // Guardar datos reales
+            localStorage.setItem("usuario", data.usuario);
+            localStorage.setItem("rol", data.rol);
+
+            // Redirección correcta
+            window.location.href = "dashboard.php";
+        } 
+        else {
+            document.getElementById("msg").innerHTML = 
+                "Usuario o contraseña incorrectos";
         }
+    })
+    .catch(err => {
+        document.getElementById("msg").innerHTML = "Error del servidor";
+        console.error(err);
     });
 });

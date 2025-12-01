@@ -1,10 +1,13 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["id"])) {
-    header("Location: dashboard.html");
+// Si NO hay sesión → volver al login
+if (!isset($_SESSION["usuario_id"])) {
+    header("Location: login.html");
     exit;
 }
 
-header("Location: dashboard.html");
+// Si hay sesión → dashboard
+header("Location: dashboard.php");
+exit;
 ?>
