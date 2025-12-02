@@ -3,7 +3,7 @@
 
 $host = "localhost";
 $user = "root";
-$pass = "2020";
+$pass = "gestion2023.";
 $db   = "segec";
 
 $conn = new mysqli($host, $user, $pass, $db);
